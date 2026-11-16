@@ -2,7 +2,7 @@
 
 **Keamanan Jaringan Komputer / Network Security (ET234302)**
 Departemen Teknologi Informasi, FTEIC, Institut Teknologi Sepuluh Nopember
-Semester Gasal 2026/2027 · Week 11-12 · Kelompok **NS01** · lab `vmw-ns-01`
+Semester Gasal 2026/2027 · Week 11-12 · Kelompok **NS05** · lab `vmw-ns-05`
 
 Dosen: Fuad Dary Rosyadi, S.Kom., M.Kom. dan Deka Julian Arrizki, S.Kom., M.Kom.
 
@@ -11,12 +11,18 @@ Dosen: Fuad Dary Rosyadi, S.Kom., M.Kom. dan Deka Julian Arrizki, S.Kom., M.Kom.
 ## Anggota kelompok
 
 | Nama | NRP |
+|---|---|
+| Ryan Adya Purwanto | 5027231046 |
+| Bayu Kurniawan | 5027241055 |
+| Asfia Fahmisan | 5027251043 |
+| Hendra Manudinata | 5027251051 |
+| Rido Patra Yudhistira Edwin | 5027251120 |
 
-| Ryan Adya Purwanto | 5027231046 
-| Bayu Kurniawan | 5027241055 
-| Asfia Fahmisan | 5027251043 
-| Hendra Manudinata | 5027251051 
-| Rido Patra Yudhistira Edwin | 5027251120
+---
+
+## Diagram arsitektur
+
+![Diagram arsitektur Assignment 2 NS05](diagram-arsitektur.png)
 
 ---
 
@@ -54,7 +60,7 @@ Perbandingan yang dipakai dosen:
 |---|---|
 | Waktu | 90 menit. Menit 0-5 login Teleport, menit 5-90 mengerjakan 20 item policy. |
 | Login | `teleport.it-its.id`, password dan MFA |
-| Lab | satu lab per kelompok, `vmw-ns-01` untuk NS01 |
+| Lab | satu lab per kelompok, `vmw-ns-05` untuk NS05 |
 | File rule | `/etc/lab/r1/`, `/etc/lab/r2/`, `/etc/lab/db/` |
 | Memuat rule | `sudo lab r1 nft -f /etc/lab/r1/<file>` |
 | Skrip tes | **tidak ada.** Pembuktian dilakukan sendiri. |
@@ -105,7 +111,7 @@ Karena ada dua router, **satu aliran bisa melewati r1 lalu r2**. Kalau satu arah
 
 ```bash
 tsh login --proxy=teleport.it-its.id
-tsh ssh ubuntu@vmw-ns-01
+tsh ssh ubuntu@vmw-ns-05
 ```
 
 ### Menit 5-15 · Recon, belum mengubah apa pun
