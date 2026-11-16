@@ -13,7 +13,7 @@ Dosen: Fuad Dary Rosyadi, S.Kom., M.Kom. dan Deka Julian Arrizki, S.Kom., M.Kom.
 | Nama | NRP | Bagian yang dikerjakan |
 |---|---|---|
 | Ryan Adya Purwanto | 5027231046 | Laporan dan diagram arsitektur |
-| Bayu Kurniawan | 5027241055 | ... |
+| Bayu Kurniawan | 5027241055 | Laporan dan diagram arsitektur |
 | Asfia Fahmisan | 5027251043 | Konfigurasi VM (rule nftables r1, r2, db) |
 | Hendra Manudinata | 5027251051 | Konfigurasi VM (rule nftables r1, r2, db) |
 | Rido Patra Yudhistira Edwin | 5027251120 | Laporan dan diagram arsitektur |
