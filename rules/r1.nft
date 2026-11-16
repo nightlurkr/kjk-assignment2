@@ -1,0 +1,64 @@
+flush ruleset
+
+define INTERNET = 203.0.113.10
+define WEB      = 172.16.10.10
+define BASTION  = 192.168.99.5
+define BOGONS   = { 0.0.0.0/8, 10.0.0.0/8, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.168.0.0/16, 224.0.0.0/4 }
+
+table inet r1 {
+  chain antispoof {
+    # OUTSIDE may not claim private/internal sources (CIS 3.2.1)
+    iifname "out0"  ip saddr $BOGONS counter drop
+    # each internal zone may only use its own subnet
+    iifname "in0"   ip saddr != 192.168.10.0/24 counter drop
+    iifname "mgmt0" ip saddr != 192.168.99.0/24 counter drop
+    iifname "dmz0"  ip saddr != { 172.16.10.0/24, 172.16.20.0/24 } counter drop
+  }
+
+  chain forward {
+    type filter hook forward priority 0; policy drop;
+
+    jump antispoof
+    ct state established,related accept
+    ct state invalid counter drop
+
+    # same zone = allowed (bridges with several hosts)
+    iifname "in0"   oifname "in0"   accept
+    iifname "mgmt0" oifname "mgmt0" accept
+    iifname "dmz0"  oifname "dmz0"  accept
+    iifname "out0"  oifname "out0"  accept
+
+    # INSIDE -> OUTSIDE: web, DNS only to real resolver, ping
+    iifname "in0" oifname "out0" tcp dport { 80, 443 } accept
+    iifname "in0" oifname "out0" ip daddr $INTERNET meta l4proto { tcp, udp } th dport 53 accept
+    iifname "in0" oifname "out0" icmp type echo-request accept
+
+    # INSIDE -> DMZ: web server only
+    iifname "in0" oifname "dmz0" ip daddr $WEB tcp dport { 80, 443 } accept
+
+    # MGMT -> DMZ: SSH to web only from bastion
+    iifname "mgmt0" oifname "dmz0" ip saddr $BASTION ip daddr $WEB tcp dport 22 accept
+
+    # OUTSIDE -> DMZ: public web only
+    iifname "out0" oifname "dmz0" ip daddr $WEB tcp dport { 80, 443 } accept
+
+    # DMZ -> OUTSIDE: updates + DNS to the known server only (no reverse shell on 443)
+    iifname "dmz0" oifname "out0" ip saddr $WEB ip daddr $INTERNET tcp dport { 80, 443 } accept
+    iifname "dmz0" oifname "out0" ip saddr $WEB ip daddr $INTERNET udp dport 53 accept
+
+    limit rate 10/second burst 20 packets log prefix "r1-fwd-drop "
+    counter drop
+  }
+
+  chain input {
+    type filter hook input priority 0; policy drop;
+    iif "lo" accept
+    jump antispoof
+    ct state established,related accept
+    ct state invalid counter drop
+    iifname "mgmt0" ip saddr $BASTION tcp dport 22 accept
+    iifname { "in0", "mgmt0" } icmp type echo-request accept
+    limit rate 10/second burst 20 packets log prefix "r1-in-drop "
+    counter drop
+  }
+}

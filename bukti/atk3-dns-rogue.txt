@@ -1,0 +1,5 @@
+;; communications error to 203.0.113.66#53: timed out
+;; communications error to 203.0.113.66#53: timed out
+;; communications error to 203.0.113.66#53: timed out
+;; no servers could be reached
+

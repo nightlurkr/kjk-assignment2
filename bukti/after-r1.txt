@@ -1,0 +1,30 @@
+table inet r1 {
+	chain forward {
+		type filter hook forward priority filter; policy drop;
+		ct state established,related accept
+		ct state invalid counter packets 0 bytes 0 drop
+		iifname "in0" oifname "in0" accept
+		iifname "mgmt0" oifname "mgmt0" accept
+		iifname "dmz0" oifname "dmz0" accept
+		iifname "out0" oifname "out0" accept
+		iifname "in0" oifname "out0" tcp dport { 80, 443 } accept
+		iifname "in0" oifname "out0" ip daddr 203.0.113.10 meta l4proto { tcp, udp } th dport 53 accept
+		iifname "in0" oifname "out0" icmp type echo-request accept
+		iifname "in0" oifname "dmz0" ip daddr 172.16.10.10 tcp dport { 80, 443 } accept
+		iifname "mgmt0" oifname "dmz0" ip saddr 192.168.99.5 ip daddr 172.16.10.10 tcp dport 22 accept
+		iifname "out0" oifname "dmz0" ip daddr 172.16.10.10 tcp dport { 80, 443 } accept
+		iifname "dmz0" oifname "out0" ip saddr 172.16.10.10 tcp dport { 80, 443 } accept
+		iifname "dmz0" oifname "out0" ip saddr 172.16.10.10 ip daddr 203.0.113.10 udp dport 53 accept
+		log prefix "r1-fwd-drop " counter packets 20 bytes 1200 drop
+	}
+
+	chain input {
+		type filter hook input priority filter; policy drop;
+		iif "lo" accept
+		ct state established,related accept
+		ct state invalid counter packets 0 bytes 0 drop
+		iifname "mgmt0" ip saddr 192.168.99.5 tcp dport 22 accept
+		iifname { "in0", "mgmt0" } icmp type echo-request accept
+		log prefix "r1-in-drop " counter packets 2 bytes 120 drop
+	}
+}

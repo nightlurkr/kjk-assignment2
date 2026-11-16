@@ -1,198 +1,173 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1180" width="1600" height="1180" font-family="DejaVu Sans, Arial, Helvetica, sans-serif" xmlns:c2pa="http://c2pa.org/manifest">
 <rect width="1600" height="1180" fill="#ffffff"/>
 
-<defs>
-  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-    <path d="M0,0 L10,5 L0,10 z" fill="#16191c"/>
-  </marker>
-  <marker id="arx" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-    <path d="M0,0 L10,5 L0,10 z" fill="#9d2c13"/>
-  </marker>
-</defs>
-
 <!-- HEADER -->
 <text x="40" y="46" font-size="30" font-weight="bold" fill="#16191c">Assignment 2 · NS05 · Class A</text>
 <text x="40" y="72" font-size="16" fill="#5a6168">Network Security ET234302 · lab vmw-ns-05 · 16 November 2026 · lima zona, dua router, firewall host di database</text>
 <line x1="40" y1="88" x2="1560" y2="88" stroke="#16191c" stroke-width="3"/>
 
-<!-- ============ DIAGRAM ============ -->
+<!-- ============ TOPOLOGI ============ -->
 
 <!-- OUTSIDE -->
-<rect x="40" y="110" width="265" height="130" rx="8" fill="#eef2f6" stroke="#7d8a96" stroke-width="2"/>
-<text x="58" y="138" font-size="20" font-weight="bold" fill="#16191c">OUTSIDE · out0</text>
-<text x="58" y="162" font-size="16" fill="#16191c">203.0.113.0/24</text>
-<text x="58" y="190" font-size="16" fill="#16191c">internet .10  (53, 80, 443, 123)</text>
-<text x="58" y="214" font-size="16" fill="#9d2c13">attacker .66  (4444, udp 53)</text>
+<rect x="40" y="118" width="255" height="120" rx="8" fill="#eef2f6" stroke="#7d8a96" stroke-width="2"/>
+<text x="58" y="146" font-size="19" font-weight="bold" fill="#16191c">OUTSIDE · out0</text>
+<text x="58" y="170" font-size="15" fill="#16191c">203.0.113.0/24</text>
+<text x="58" y="194" font-size="15" fill="#16191c">internet .10  (53, 80, 443, 123)</text>
+<text x="58" y="218" font-size="15" fill="#9d2c13">attacker .66  (4444, udp 53)</text>
 
 <!-- INSIDE -->
-<rect x="40" y="268" width="265" height="110" rx="8" fill="#eef2f6" stroke="#7d8a96" stroke-width="2"/>
-<text x="58" y="296" font-size="20" font-weight="bold" fill="#16191c">INSIDE · in0</text>
-<text x="58" y="320" font-size="16" fill="#16191c">192.168.10.0/24</text>
-<text x="58" y="348" font-size="16" fill="#16191c">staff .50  (445)</text>
-
-<!-- MGMT -->
-<rect x="40" y="406" width="265" height="130" rx="8" fill="#eef2f6" stroke="#7d8a96" stroke-width="2"/>
-<text x="58" y="434" font-size="20" font-weight="bold" fill="#16191c">MGMT · mgmt0</text>
-<text x="58" y="458" font-size="16" fill="#16191c">192.168.99.0/24</text>
-<text x="58" y="486" font-size="16" fill="#16191c">bastion .5  (22)</text>
-<text x="58" y="510" font-size="16" fill="#16191c">admin .10  (22)</text>
+<rect x="40" y="278" width="255" height="100" rx="8" fill="#eef2f6" stroke="#7d8a96" stroke-width="2"/>
+<text x="58" y="306" font-size="19" font-weight="bold" fill="#16191c">INSIDE · in0</text>
+<text x="58" y="330" font-size="15" fill="#16191c">192.168.10.0/24</text>
+<text x="58" y="354" font-size="15" fill="#16191c">staff .50  (445)</text>
 
 <!-- r1 -->
-<rect x="390" y="240" width="215" height="200" rx="8" fill="#1d3557"/>
-<text x="410" y="272" font-size="24" font-weight="bold" fill="#ffffff">r1</text>
-<text x="410" y="302" font-size="15" fill="#d6e2ee">out0   203.0.113.1</text>
-<text x="410" y="326" font-size="15" fill="#d6e2ee">in0    192.168.10.1</text>
-<text x="410" y="350" font-size="15" fill="#d6e2ee">mgmt0  192.168.99.1</text>
-<text x="410" y="374" font-size="15" fill="#d6e2ee">dmz0   172.16.10.1</text>
-<text x="410" y="406" font-size="13" fill="#f2c14e">chain antispoof</text>
-<text x="410" y="425" font-size="13" fill="#f2c14e">forward + input: policy drop</text>
+<rect x="355" y="196" width="180" height="180" rx="8" fill="#1d3557"/>
+<text x="374" y="228" font-size="23" font-weight="bold" fill="#ffffff">r1</text>
+<text x="374" y="256" font-size="13.5" fill="#d6e2ee">out0   203.0.113.1</text>
+<text x="374" y="278" font-size="13.5" fill="#d6e2ee">in0    192.168.10.1</text>
+<text x="374" y="300" font-size="13.5" fill="#d6e2ee">dmz0   172.16.10.1</text>
+<text x="374" y="322" font-size="13.5" fill="#d6e2ee">mgmt0  192.168.99.1</text>
+<text x="374" y="350" font-size="13" fill="#f2c14e">antispoof · policy drop</text>
 
-<!-- DMZ -->
-<rect x="690" y="120" width="275" height="120" rx="8" fill="#eef2f6" stroke="#7d8a96" stroke-width="2"/>
-<text x="708" y="148" font-size="20" font-weight="bold" fill="#16191c">DMZ · dmz0</text>
-<text x="708" y="172" font-size="16" fill="#16191c">172.16.10.0/24</text>
-<text x="708" y="200" font-size="16" fill="#16191c">web .10</text>
-<text x="708" y="224" font-size="16" fill="#16191c">22, 80, 443, 8443</text>
+<!-- DMZ segmen bersama -->
+<rect x="620" y="118" width="400" height="130" rx="8" fill="#eef2f6" stroke="#7d8a96" stroke-width="2"/>
+<text x="638" y="146" font-size="19" font-weight="bold" fill="#16191c">DMZ · segmen dmz0</text>
+<text x="638" y="170" font-size="15" fill="#16191c">172.16.10.0/24  ·  web .10  (22, 80, 443, 8443)</text>
+<text x="638" y="200" font-size="14" fill="#5a6168">Segmen bersama. Yang menempel di sini:</text>
+<text x="638" y="222" font-size="14" fill="#5a6168">web .10   ·   r1 dmz0 .1   ·   r2 dmz0 .2</text>
 
 <!-- r2 -->
-<rect x="1040" y="268" width="215" height="175" rx="8" fill="#1d3557"/>
-<text x="1060" y="300" font-size="24" font-weight="bold" fill="#ffffff">r2</text>
-<text x="1060" y="330" font-size="15" fill="#d6e2ee">dmz0   172.16.10.2</text>
-<text x="1060" y="354" font-size="15" fill="#d6e2ee">mgmt0  192.168.99.2</text>
-<text x="1060" y="378" font-size="15" fill="#d6e2ee">data0  172.16.20.1</text>
-<text x="1060" y="410" font-size="13" fill="#f2c14e">forward + input: policy drop</text>
+<rect x="1100" y="196" width="180" height="180" rx="8" fill="#1d3557"/>
+<text x="1119" y="228" font-size="23" font-weight="bold" fill="#ffffff">r2</text>
+<text x="1119" y="256" font-size="13.5" fill="#d6e2ee">dmz0   172.16.10.2</text>
+<text x="1119" y="278" font-size="13.5" fill="#d6e2ee">mgmt0  192.168.99.2</text>
+<text x="1119" y="300" font-size="13.5" fill="#d6e2ee">data0  172.16.20.1</text>
+<text x="1119" y="330" font-size="13" fill="#f2c14e">policy drop</text>
+<text x="1119" y="352" font-size="12.5" fill="#f2c14e">default via 172.16.10.1</text>
 
 <!-- DATA -->
-<rect x="1310" y="330" width="250" height="140" rx="8" fill="#eef2f6" stroke="#7d8a96" stroke-width="2"/>
-<text x="1328" y="358" font-size="20" font-weight="bold" fill="#16191c">DATA · data0</text>
-<text x="1328" y="382" font-size="16" fill="#16191c">172.16.20.0/24</text>
-<text x="1328" y="410" font-size="16" fill="#16191c">db .10  (22, 3306)</text>
-<text x="1328" y="440" font-size="15" font-weight="bold" fill="#9d2c13">firewall host sendiri:</text>
-<text x="1328" y="460" font-size="15" font-weight="bold" fill="#9d2c13">table inet db, policy drop</text>
+<rect x="1345" y="206" width="215" height="140" rx="8" fill="#eef2f6" stroke="#7d8a96" stroke-width="2"/>
+<text x="1363" y="234" font-size="19" font-weight="bold" fill="#16191c">DATA · data0</text>
+<text x="1363" y="258" font-size="15" fill="#16191c">172.16.20.0/24</text>
+<text x="1363" y="282" font-size="15" fill="#16191c">db .10  (22, 3306)</text>
+<text x="1363" y="312" font-size="13.5" font-weight="bold" fill="#9d2c13">firewall host sendiri:</text>
+<text x="1363" y="332" font-size="13.5" font-weight="bold" fill="#9d2c13">table inet db, policy drop</text>
 
-<!-- garis aliran -->
-<g stroke="#16191c" stroke-width="2.5" fill="none" marker-end="url(#ar)">
-  <path d="M305 175 L390 268"/>
-  <path d="M305 322 L390 334"/>
-  <path d="M305 470 L390 400"/>
-  <path d="M605 300 L690 200"/>
-  <path d="M965 185 L1040 300"/>
-  <path d="M1255 370 L1310 385"/>
-  <path d="M172 536 L172 600 L1148 600 L1148 443"/>
+<!-- MGMT segmen bersama -->
+<rect x="355" y="470" width="925" height="110" rx="8" fill="#eef2f6" stroke="#7d8a96" stroke-width="2"/>
+<text x="375" y="498" font-size="19" font-weight="bold" fill="#16191c">MGMT · segmen mgmt0 · 192.168.99.0/24</text>
+<text x="375" y="524" font-size="15" fill="#16191c">bastion .5  (22)   ·   admin .10  (22)</text>
+<text x="375" y="550" font-size="14" fill="#5a6168">Segmen bersama. Yang menempel: bastion .5 · admin .10 · r1 mgmt0 .1 · r2 mgmt0 .2</text>
+
+<!-- tautan fisik -->
+<g stroke="#16191c" stroke-width="2.5" fill="none">
+  <path d="M295 178 L355 232"/>
+  <path d="M295 328 L355 318"/>
+  <path d="M470 196 L470 160 L620 160"/>
+  <path d="M1165 196 L1165 160 L1020 160"/>
+  <path d="M430 376 L430 470"/>
+  <path d="M1205 376 L1205 470"/>
+  <path d="M1280 276 L1345 276"/>
 </g>
 
-<!-- nomor aliran -->
-<g font-size="17" font-weight="bold" text-anchor="middle">
-  <circle cx="348" cy="222" r="15" fill="#ffffff" stroke="#16191c" stroke-width="2"/><text x="348" y="228" fill="#16191c">1</text>
-  <circle cx="348" cy="328" r="15" fill="#ffffff" stroke="#16191c" stroke-width="2"/><text x="348" y="334" fill="#16191c">2</text>
-  <circle cx="348" cy="435" r="15" fill="#ffffff" stroke="#16191c" stroke-width="2"/><text x="348" y="441" fill="#16191c">3</text>
-  <circle cx="648" cy="250" r="15" fill="#ffffff" stroke="#16191c" stroke-width="2"/><text x="648" y="256" fill="#16191c">4</text>
-  <circle cx="1003" cy="243" r="15" fill="#ffffff" stroke="#16191c" stroke-width="2"/><text x="1003" y="249" fill="#16191c">5</text>
-  <circle cx="1283" cy="378" r="15" fill="#ffffff" stroke="#16191c" stroke-width="2"/><text x="1283" y="384" fill="#16191c">6</text>
-  <circle cx="660" cy="600" r="15" fill="#ffffff" stroke="#16191c" stroke-width="2"/><text x="660" y="606" fill="#16191c">7</text>
+<!-- label interface -->
+<g font-size="12.5" fill="#1d3557" font-weight="bold">
+  <text x="302" y="222">out0 .1</text>
+  <text x="302" y="352">in0 .1</text>
+  <text x="482" y="152">dmz0 .1</text>
+  <text x="1058" y="152">dmz0 .2</text>
+  <text x="440" y="432">mgmt0 .1</text>
+  <text x="1215" y="432">mgmt0 .2</text>
+  <text x="1282" y="266">data0 .1</text>
 </g>
 
-<!-- kotak serangan yang diuji, di ruang kosong tengah -->
-<rect x="640" y="300" width="370" height="250" rx="8" fill="#fdf0ec" stroke="#9d2c13" stroke-width="2"/>
-<text x="660" y="330" font-size="17" font-weight="bold" fill="#9d2c13">BLOCKED ATTACKS · dua uji</text>
+<!-- catatan topologi -->
+<text x="620" y="438" font-size="13.5" fill="#5a6168">r1 dan r2 sama-sama menempel pada segmen DMZ dan MGMT.</text>
+<text x="620" y="456" font-size="13.5" fill="#5a6168">Trafik ke DATA lewat r1 lalu r2, kedua ruleset harus setuju.</text>
 
-<text x="660" y="362" font-size="15" font-weight="bold" fill="#16191c">A. Akses langsung ke database</text>
-<text x="660" y="384" font-size="14" fill="#16191c">attacker .66 → db 172.16.20.10:3306</text>
-<g stroke="#9d2c13" stroke-width="2.5" stroke-dasharray="9 7" fill="none" marker-end="url(#arx)">
-  <path d="M662 398 L880 398"/>
-</g>
-<text x="890" y="403" font-size="18" font-weight="bold" fill="#9d2c13">✗</text>
-<text x="660" y="422" font-size="13.5" fill="#9d2c13">Gagal di r2 dan sekali lagi di host db.</text>
-<text x="660" y="440" font-size="13.5" fill="#9d2c13">r2-fwd-drop naik, db-in-drop naik.</text>
+<!-- kotak serangan -->
+<rect x="620" y="268" width="400" height="152" rx="8" fill="#fdf0ec" stroke="#9d2c13" stroke-width="2"/>
+<text x="638" y="294" font-size="15.5" font-weight="bold" fill="#9d2c13">BLOCKED ATTACKS · before / after</text>
+<text x="638" y="320" font-size="14" font-weight="bold" fill="#16191c">A. attacker .66 → staff 192.168.10.50:445</text>
+<text x="638" y="340" font-size="13" fill="#16191c">sebelum: succeeded!    sesudah: timed out</text>
+<text x="638" y="368" font-size="14" font-weight="bold" fill="#16191c">B. web .10 → attacker 203.0.113.66:4444</text>
+<text x="638" y="388" font-size="13" fill="#16191c">sebelum: succeeded!    sesudah: timed out</text>
+<text x="638" y="410" font-size="12.5" fill="#9d2c13">Keduanya tertangkap r1-fwd-drop, counter naik.</text>
 
-<text x="660" y="472" font-size="15" font-weight="bold" fill="#16191c">B. Spoofing alamat privat</text>
-<text x="660" y="494" font-size="14" fill="#16191c">source 192.168.10.x masuk lewat out0</text>
-<g stroke="#9d2c13" stroke-width="2.5" stroke-dasharray="9 7" fill="none" marker-end="url(#arx)">
-  <path d="M662 508 L880 508"/>
-</g>
-<text x="890" y="513" font-size="18" font-weight="bold" fill="#9d2c13">✗</text>
-<text x="660" y="532" font-size="13.5" fill="#9d2c13">Gagal di chain antispoof r1, counter bogon naik.</text>
-
-<line x1="40" y1="632" x2="1560" y2="632" stroke="#c9cfd4" stroke-width="2"/>
+<line x1="40" y1="612" x2="1560" y2="612" stroke="#c9cfd4" stroke-width="2"/>
 
 <!-- ============ ALLOWED FLOWS ============ -->
-<text x="40" y="664" font-size="17" font-weight="bold" fill="#1d3557">ALLOWED FLOWS · satu baris per aliran, dengan port dan rule yang mengizinkan</text>
+<text x="40" y="644" font-size="17" font-weight="bold" fill="#1d3557">ALLOWED FLOWS · satu baris per aliran, dengan port dan rule yang mengizinkan</text>
 
 <g font-size="14.5" fill="#16191c">
-  <text x="40"  y="696" font-weight="bold">1</text>
-  <text x="68"  y="696" font-weight="bold">OUTSIDE → DMZ</text>
-  <text x="285" y="696">tcp 80, 443 ke web saja</text>
-  <text x="560" y="696" fill="#3c4650">iifname out0 oifname dmz0 ip daddr $WEB tcp dport { 80, 443 } accept</text>
+  <text x="40"  y="676" font-weight="bold">OUTSIDE → DMZ</text>
+  <text x="275" y="676">tcp 80, 443 ke web saja</text>
+  <text x="560" y="676" fill="#3c4650">r1: iifname out0 oifname dmz0 ip daddr $WEB tcp dport { 80, 443 } accept</text>
 
-  <text x="40"  y="724" font-weight="bold">2</text>
-  <text x="68"  y="724" font-weight="bold">INSIDE → OUTSIDE</text>
-  <text x="285" y="724">tcp 80, 443, 587 · icmp</text>
-  <text x="560" y="724" fill="#3c4650">iifname in0 oifname out0 tcp dport { 80, 443, 587 } accept</text>
+  <text x="40"  y="704" font-weight="bold">INSIDE → OUTSIDE</text>
+  <text x="275" y="704">tcp 80, 443, 587 · icmp</text>
+  <text x="560" y="704" fill="#3c4650">r1: iifname in0 oifname out0 tcp dport { 80, 443, 587 } accept</text>
 
-  <text x="68"  y="752" font-weight="bold">INSIDE → OUTSIDE</text>
-  <text x="285" y="752">dns 53, ntp 123</text>
-  <text x="560" y="752" fill="#3c4650">… ip daddr $INTERNET th dport 53 accept  ·  udp dport 123 accept</text>
+  <text x="40"  y="732" font-weight="bold">INSIDE → OUTSIDE</text>
+  <text x="275" y="732">dns 53, ntp 123</text>
+  <text x="560" y="732" fill="#3c4650">r1: … ip daddr $INTERNET th dport 53 accept  ·  udp dport 123 accept</text>
 
-  <text x="68"  y="780" font-weight="bold">INSIDE → DMZ</text>
-  <text x="285" y="780">tcp 80, 443</text>
-  <text x="560" y="780" fill="#3c4650">iifname in0 oifname dmz0 ip daddr $WEB tcp dport { 80, 443 } accept</text>
+  <text x="40"  y="760" font-weight="bold">INSIDE → DMZ</text>
+  <text x="275" y="760">tcp 80, 443</text>
+  <text x="560" y="760" fill="#3c4650">r1: iifname in0 oifname dmz0 ip daddr $WEB tcp dport { 80, 443 } accept</text>
 
-  <text x="40"  y="808" font-weight="bold">3</text>
-  <text x="68"  y="808" font-weight="bold">MGMT → DMZ</text>
-  <text x="285" y="808">tcp 80, 443, 8443</text>
-  <text x="560" y="808" fill="#3c4650">iifname mgmt0 oifname dmz0 ip daddr $WEB tcp dport { 80, 443, 8443 } accept</text>
+  <text x="40"  y="788" font-weight="bold">MGMT → DMZ</text>
+  <text x="275" y="788">tcp 80, 443, 8443</text>
+  <text x="560" y="788" fill="#3c4650">r1: iifname mgmt0 oifname dmz0 ip daddr $WEB tcp dport { 80, 443, 8443 } accept</text>
 
-  <text x="68"  y="836" font-weight="bold">MGMT → DMZ</text>
-  <text x="285" y="836">tcp 22 hanya dari bastion</text>
-  <text x="560" y="836" fill="#3c4650">… ip saddr $BASTION ip daddr $WEB tcp dport 22 accept</text>
+  <text x="40"  y="816" font-weight="bold">MGMT → DMZ</text>
+  <text x="275" y="816">tcp 22 hanya dari bastion</text>
+  <text x="560" y="816" fill="#3c4650">r1: … ip saddr $BASTION ip daddr $WEB tcp dport 22 accept</text>
 
-  <text x="68"  y="864" font-weight="bold">MGMT → OUTSIDE</text>
-  <text x="285" y="864">tcp 80, 443 · dns 53 · ntp 123</text>
-  <text x="560" y="864" fill="#3c4650">iifname mgmt0 oifname out0 tcp dport { 80, 443 } accept</text>
+  <text x="40"  y="844" font-weight="bold">MGMT → OUTSIDE</text>
+  <text x="275" y="844">tcp 80, 443 · dns 53 · ntp 123</text>
+  <text x="560" y="844" fill="#3c4650">r1: iifname mgmt0 oifname out0 tcp dport { 80, 443 } accept</text>
 
-  <text x="40"  y="892" font-weight="bold">4</text>
-  <text x="68"  y="892" font-weight="bold">DMZ → OUTSIDE</text>
-  <text x="285" y="892">tcp 80, 443 · udp 53, 123</text>
-  <text x="560" y="892" fill="#3c4650">ip saddr $WEB ip daddr $INTERNET … (hanya ke server yang dikenal)</text>
+  <text x="40"  y="872" font-weight="bold">DMZ → OUTSIDE</text>
+  <text x="275" y="872">tcp 80, 443 · udp 53, 123</text>
+  <text x="560" y="872" fill="#3c4650">r1: ip saddr $WEB ip daddr $INTERNET …  (hanya ke server yang dikenal)</text>
 
-  <text x="40"  y="920" font-weight="bold">5</text>
-  <text x="68"  y="920" font-weight="bold">DMZ → DATA</text>
-  <text x="285" y="920">tcp 3306, web ke db saja</text>
-  <text x="560" y="920" fill="#3c4650">r2: iifname dmz0 oifname data0 ip saddr $WEB ip daddr $DB tcp dport 3306 accept</text>
+  <text x="40"  y="900" font-weight="bold">DMZ → DATA</text>
+  <text x="275" y="900">tcp 3306, web ke db saja</text>
+  <text x="560" y="900" fill="#3c4650">r2: iifname dmz0 oifname data0 ip saddr $WEB ip daddr $DB tcp dport 3306 accept</text>
 
-  <text x="40"  y="948" font-weight="bold">7</text>
-  <text x="68"  y="948" font-weight="bold">MGMT → DATA</text>
-  <text x="285" y="948">tcp 22 dari bastion · icmp</text>
-  <text x="560" y="948" fill="#3c4650">r2: … ip saddr $BASTION ip daddr $DB tcp dport 22 accept</text>
+  <text x="40"  y="928" font-weight="bold">MGMT → DATA</text>
+  <text x="275" y="928">tcp 22 dari bastion · icmp</text>
+  <text x="560" y="928" fill="#3c4650">r2: … ip saddr $BASTION ip daddr $DB tcp dport 22 accept</text>
 
-  <text x="40"  y="976" font-weight="bold">6</text>
-  <text x="68"  y="976" font-weight="bold">Lapis kedua di db</text>
-  <text x="285" y="976">3306 dari web · 22 dari bastion</text>
-  <text x="560" y="976" fill="#3c4650">db: ip saddr 172.16.10.10 tcp dport 3306 accept</text>
+  <text x="40"  y="956" font-weight="bold">Lapis kedua di db</text>
+  <text x="275" y="956">3306 dari web · 22 dari bastion</text>
+  <text x="560" y="956" fill="#3c4650">db: ip saddr 172.16.10.10 tcp dport 3306 accept</text>
 
-  <text x="68"  y="1004" font-weight="bold">Dalam zona sama</text>
-  <text x="285" y="1004">semua</text>
-  <text x="560" y="1004" fill="#3c4650">iifname X oifname X accept  ·  ct state established,related accept</text>
+  <text x="40"  y="984" font-weight="bold">Dalam zona sama</text>
+  <text x="275" y="984">semua</text>
+  <text x="560" y="984" fill="#3c4650">r1: iifname X oifname X accept  ·  ct state established,related accept</text>
 </g>
 
-<line x1="40" y1="1028" x2="1560" y2="1028" stroke="#c9cfd4" stroke-width="2"/>
+<line x1="40" y1="1012" x2="1560" y2="1012" stroke="#c9cfd4" stroke-width="2"/>
 
 <!-- ============ ARAH DITUTUP + TEAM ============ -->
-<text x="40" y="1058" font-size="17" font-weight="bold" fill="#9d2c13">ARAH YANG DITUTUP · tidak ada rule, tertangkap policy drop</text>
+<text x="40" y="1042" font-size="17" font-weight="bold" fill="#9d2c13">ARAH YANG DITUTUP · tidak ada rule, tertangkap policy drop</text>
 <g font-size="14.5" fill="#16191c">
-  <text x="40" y="1086">OUTSIDE → INSIDE, MGMT, DATA</text>
-  <text x="40" y="1110">DMZ → INSIDE, MGMT   (web yang diretas tidak bisa pivot ke dalam)</text>
-  <text x="40" y="1134">DATA → semua arah   (db tidak pernah memulai koneksi keluar)</text>
-  <text x="40" y="1158">INSIDE → DATA, MGMT   ·   source palsu dari out0</text>
+  <text x="40" y="1070">OUTSIDE → INSIDE, MGMT, DATA</text>
+  <text x="40" y="1094">DMZ → INSIDE, MGMT   (web yang diretas tidak bisa pivot ke dalam)</text>
+  <text x="40" y="1118">DATA → semua arah   (db tidak pernah memulai koneksi keluar)</text>
+  <text x="40" y="1142">INSIDE → DATA, MGMT   ·   source palsu dari out0 (chain antispoof)</text>
 </g>
 
-<text x="830" y="1058" font-size="17" font-weight="bold" fill="#1d3557">TEAM · NS05</text>
+<text x="830" y="1042" font-size="17" font-weight="bold" fill="#1d3557">TEAM · NS05</text>
 <g font-size="14" fill="#16191c">
-  <text x="830" y="1084">Ryan Adya Purwanto · 5027231046</text>
-  <text x="830" y="1106">Bayu Kurniawan · 5027241055</text>
-  <text x="830" y="1128">Asfia Fahmisan · 5027251043</text>
-  <text x="830" y="1150">Hendra Manudinata · 5027251051</text>
-  <text x="830" y="1172">Rido Patra Yudhistira Edwin · 5027251120</text>
+  <text x="830" y="1070">Ryan Adya Purwanto · 5027231046</text>
+  <text x="830" y="1092">Bayu Kurniawan · 5027241055</text>
+  <text x="830" y="1114">Asfia Fahmisan · 5027251043</text>
+  <text x="830" y="1136">Hendra Manudinata · 5027251051</text>
+  <text x="830" y="1158">Rido Patra Yudhistira Edwin · 5027251120</text>
 </g>
 
-<metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYToxMzZmZDMwNy1mMjMxLTRjNjQtYmUzNS1jNDQzODJjZWFmNzQAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaKu2IlSt8rUI2WxqRNf9imUAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpjYjBjOWVjOC1kMDY3LTQzZWMtODJkYy1jNGExMTRhOTBlZjNscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNojQT4Bh7hl5Iq1q2CqwyCBgAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg8NgKBsm4DRNwURS79PhnNLgP+z4JjFeW/4DFJMVG+RGkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaNHZE0FbGDci3jCb2Va9erMAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIDaVvI1ez4cflK5R367vQM2HYNmUVF8EQGDYmmiXltuBZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GS4CZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjEzNmZkMzA3LWYyMzEtNGM2NC1iZTM1LWM0NDM4MmNlYWY3NC9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjlhYzIyZGRiLTMwZTAtNGJlNy1iMWM4LThiN2U2YTA5MWQxNnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCDw2AoGybgNE3BRFLv0+Gc0uA/7PgmMV5b/gMUkxUb5EaJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggfuziDPPTd5qWVOSW6iy2cdwkmdcCoFC1qh0YlfnAvUWiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggnT4aVE+A+ViDFYK+0WiXxWOyJBnADA+FPnLer4yiM/F0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQJ/1HQSRZcBIwyI5W7f6OlyYrhc9BTJLmyNLkpP5JFF+QEsTBNKWJREE5N1Viv7+qD8uC2rzrF6KZ0fTEsN+xME=</c2pa:manifest></metadata></svg>
+<metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTowOWIxNWQ2Yi1kYjY5LTQzYjgtODEzMC1iNzgyODc1MjllYWEAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaPkBEdFXI91IbBuRIdqsvsoAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpkNTRlZWZlZi1iNTk1LTQzMGUtYWEzZi0xZjM5NDI5MzdhYWJscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNo3Elc5bk++aGXrZpRCdF9CAAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg7e725ncS+YwuAjRBtBjg7nM28ZK+EEIm/dTKOpN0brGkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaK36iqwuJ6e518E2JRUiYxwAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIJgCFhDOXk1sABp6s/nviYCBi//G1MmuKelJG+ft3cUyZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GSgpZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjA5YjE1ZDZiLWRiNjktNDNiOC04MTMwLWI3ODI4NzUyOWVhYS9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjQyMDQ2NjZjLTUxMmQtNDM3Yy1iYzk2LTUwYTMyMWZhNmYzNnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCDt7vbmdxL5jC4CNEG0GODuczbxkr4QQib91Mo6k3RusaJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggPnceS8x6ziuW6kQAwqI77PhRhMQa94JTt8fGjzsFPxqiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggL3muMrhIXj+fWGyQvDov+YAfy60UTm3SdsJhIMKXQrZ0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQEIDjB7B5oWsOYRUFxmiHyXlRtimDfyEhb0al3/CIbCUYWtwJp/ORZN7YktCsWUkYAFS4RAkzVsQC7FO6Tm+dA0=</c2pa:manifest></metadata></svg>

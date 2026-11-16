@@ -1,0 +1,44 @@
+== staff -> 203.0.113.10 (expect ALLOW)
+Connection to 203.0.113.10 80 port [tcp/http] succeeded!
+== staff -> 203.0.113.10 (expect ALLOW)
+Connection to 203.0.113.10 443 port [tcp/https] succeeded!
+== staff -> 203.0.113.10 (expect BLOCK)
+nc: connect to 203.0.113.10 port 25 (tcp) timed out: Operation now in progress
+== staff -> 203.0.113.66 (expect BLOCK)
+nc: connect to 203.0.113.66 port 4444 (tcp) timed out: Operation now in progress
+== staff -> 172.16.10.10 (expect ALLOW)
+Connection to 172.16.10.10 80 port [tcp/http] succeeded!
+== staff -> 172.16.20.10 (expect BLOCK)
+nc: connect to 172.16.20.10 port 3306 (tcp) timed out: Operation now in progress
+== attacker -> 172.16.10.10 (expect ALLOW)
+Connection to 172.16.10.10 80 port [tcp/http] succeeded!
+== attacker -> 172.16.10.10 (expect BLOCK)
+nc: connect to 172.16.10.10 port 22 (tcp) timed out: Operation now in progress
+== attacker -> 192.168.10.50 (expect BLOCK)
+nc: connect to 192.168.10.50 port 445 (tcp) timed out: Operation now in progress
+== attacker -> 172.16.20.10 (expect BLOCK)
+nc: connect to 172.16.20.10 port 3306 (tcp) timed out: Operation now in progress
+== web -> 172.16.20.10 (expect ALLOW)
+Connection to 172.16.20.10 3306 port [tcp/mysql] succeeded!
+== web -> 192.168.10.50 (expect BLOCK)
+nc: connect to 192.168.10.50 port 445 (tcp) timed out: Operation now in progress
+== web -> 203.0.113.66 (expect BLOCK)
+nc: connect to 203.0.113.66 port 4444 (tcp) timed out: Operation now in progress
+== bastion -> 172.16.10.10 (expect ALLOW)
+Connection to 172.16.10.10 22 port [tcp/ssh] succeeded!
+== bastion -> 172.16.20.10 (expect ALLOW)
+Connection to 172.16.20.10 22 port [tcp/ssh] succeeded!
+== admin -> 172.16.20.10 (expect BLOCK)
+nc: connect to 172.16.20.10 port 22 (tcp) timed out: Operation now in progress
+== bastion -> 192.168.99.1 (expect ALLOW)
+Connection to 192.168.99.1 22 port [tcp/ssh] succeeded!
+== staff -> 192.168.10.1 (expect BLOCK)
+nc: connect to 192.168.10.1 port 22 (tcp) timed out: Operation now in progress
+== staff ping internet (expect ALLOW)
+PING 203.0.113.10 (203.0.113.10) 56(84) bytes of data.
+64 bytes from 203.0.113.10: icmp_seq=1 ttl=63 time=0.068 ms
+64 bytes from 203.0.113.10: icmp_seq=2 ttl=63 time=0.103 ms
+
+--- 203.0.113.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1049ms
+rtt min/avg/max/mdev = 0.068/0.085/0.103/0.017 ms

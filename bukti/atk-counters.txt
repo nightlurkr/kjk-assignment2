@@ -1,0 +1,15 @@
+		type filter hook input priority filter; policy drop;
+		ct state invalid counter packets 0 bytes 0 drop
+		log prefix "db-in-drop " counter packets 0 bytes 0 drop
+		type filter hook forward priority filter; policy drop;
+		ct state invalid counter packets 0 bytes 0 drop
+		log prefix "r1-fwd-drop " counter packets 20 bytes 1200 drop
+		type filter hook input priority filter; policy drop;
+		ct state invalid counter packets 0 bytes 0 drop
+		log prefix "r1-in-drop " counter packets 2 bytes 120 drop
+		type filter hook forward priority filter; policy drop;
+		ct state invalid counter packets 0 bytes 0 drop
+		log prefix "r2-fwd-drop " counter packets 2 bytes 120 drop
+		type filter hook input priority filter; policy drop;
+		ct state invalid counter packets 0 bytes 0 drop
+		log prefix "r2-in-drop " counter packets 0 bytes 0 drop

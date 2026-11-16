@@ -1,0 +1,14 @@
+flush ruleset
+
+table inet db {
+  chain input {
+    type filter hook input priority 0; policy drop;
+    iif "lo" accept
+    ct state established,related accept
+    ct state invalid counter drop
+    ip saddr 172.16.10.10 tcp dport 3306 accept
+    ip saddr 192.168.99.5 tcp dport 22 accept
+    ip saddr 192.168.99.0/24 icmp type echo-request accept
+    log prefix "db-in-drop " counter drop
+  }
+}

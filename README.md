@@ -33,10 +33,14 @@ Dosen: Fuad Dary Rosyadi, S.Kom., M.Kom. dan Deka Julian Arrizki, S.Kom., M.Kom.
 | `diagram-arsitektur.png` | **Laporan satu halaman yang dikumpulkan.** Gambar arsitektur berisi enam baris rubrik. |
 | `diagram-arsitektur.svg` | Sumber gambar, bisa diedit kalau ada perubahan. |
 | `README.md` | Dokumen ini: langkah pengerjaan, rule, dan cara pembuktian. |
-| `rules/r1.nft` | Salinan `/etc/lab/r1/r1.nft` |
-| `rules/r2.nft` | Salinan `/etc/lab/r2/r2.nft` |
-| `rules/db.nft` | Salinan `/etc/lab/db/db.nft` |
-| `bukti/` | Output `nft list ruleset`, log drop, dan hasil probe |
+| `rules/r1.nft` | Ruleset final r1 |
+| `rules/r2.nft` | Ruleset final r2 |
+| `rules/db.nft` | Ruleset final host database |
+| `bukti/atk*-before.txt`, `atk*-after.txt` | Serangan sebelum dan sesudah hardening |
+| `bukti/flow-tests-v1..v4.txt` | Hasil uji aliran tiap versi |
+| `bukti/after-r*.txt` | `nft list ruleset` dengan counter |
+| `bukti/atk-counters.txt` | Counter drop setelah serangan |
+| `bukti/versi/` | Riwayat tiap versi rule, termasuk `r1.nft.before` (starter) |
 
 ---
 
@@ -101,7 +105,26 @@ Lima zona, dua router, dan satu firewall host di database.
 | r2 | `dmz0` 172.16.10.2 · `mgmt0` 192.168.99.2 · `data0` 172.16.20.1 | firewall dalam, melindungi zona DATA |
 | db | host 172.16.20.10 | firewall host sendiri, `table inet db` |
 
-Karena ada dua router, **satu aliran bisa melewati r1 lalu r2**. Kalau satu arah tidak jalan, periksa kedua ruleset, bukan hanya satu.
+### Cara kedua router terhubung
+
+Ini bagian yang paling mudah salah digambar. **r2 bukan berada di belakang DMZ.** r1 dan r2 sama-sama menempel pada dua segmen yang sama:
+
+- Segmen `dmz0` (172.16.10.0/24) ditempati tiga pihak: `web` .10, interface `dmz0` milik r1 (.1), dan interface `dmz0` milik r2 (.2).
+- Segmen `mgmt0` (192.168.99.0/24) ditempati empat pihak: `bastion` .5, `admin` .10, interface `mgmt0` milik r1 (.1), dan interface `mgmt0` milik r2 (.2).
+- Hanya r2 yang menempel pada segmen `data0`, dan di situlah `db` berada.
+
+Bukti dari tabel rute di lab:
+
+```
+r2       default via 172.16.10.1 dev dmz0         # r2 keluar lewat r1
+r1       172.16.20.0/24 via 172.16.10.2 dev dmz0  # r1 mencapai DATA lewat r2
+web      default via 172.16.10.1                  # web keluar lewat r1
+web      172.16.20.0/24 via 172.16.10.2           # web ke db lewat r2
+bastion  default via 192.168.99.1                 # bastion keluar lewat r1
+bastion  172.16.20.0/24 via 192.168.99.2          # bastion ke db lewat r2
+```
+
+Konsekuensinya: **aliran dari INSIDE atau OUTSIDE menuju DATA melewati r1 lalu r2.** Kalau satu arah tidak jalan, periksa kedua ruleset, bukan hanya satu.
 
 ---
 

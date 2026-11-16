@@ -1,0 +1,47 @@
+table inet r1 {
+	chain antispoof {
+		iifname "out0" ip saddr { 0.0.0.0/8, 10.0.0.0/8, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.168.0.0/16, 224.0.0.0/4 } counter packets 0 bytes 0 drop
+		iifname "in0" ip saddr != 192.168.10.0/24 counter packets 0 bytes 0 drop
+		iifname "mgmt0" ip saddr != 192.168.99.0/24 counter packets 0 bytes 0 drop
+		iifname "dmz0" ip saddr != { 172.16.10.0/24, 172.16.20.0/24 } counter packets 0 bytes 0 drop
+	}
+
+	chain forward {
+		type filter hook forward priority filter; policy drop;
+		jump antispoof
+		ct state established,related accept
+		ct state invalid counter packets 0 bytes 0 drop
+		iifname "in0" oifname "in0" accept
+		iifname "mgmt0" oifname "mgmt0" accept
+		iifname "dmz0" oifname "dmz0" accept
+		iifname "out0" oifname "out0" accept
+		iifname "mgmt0" icmp type echo-request accept
+		iifname "in0" oifname "out0" tcp dport { 80, 443, 587 } accept
+		iifname "in0" oifname "out0" ip daddr 203.0.113.10 meta l4proto { tcp, udp } th dport 53 accept
+		iifname "in0" oifname "out0" ip daddr 203.0.113.10 udp dport 123 accept
+		iifname "in0" oifname "out0" icmp type echo-request accept
+		iifname "in0" oifname "dmz0" ip daddr 172.16.10.10 tcp dport { 80, 443 } accept
+		iifname "mgmt0" oifname "dmz0" ip daddr 172.16.10.10 tcp dport { 80, 443, 8443 } accept
+		iifname "mgmt0" oifname "dmz0" ip saddr 192.168.99.5 ip daddr 172.16.10.10 tcp dport 22 accept
+		iifname "mgmt0" oifname "out0" tcp dport { 80, 443 } accept
+		iifname "mgmt0" oifname "out0" ip daddr 203.0.113.10 meta l4proto { tcp, udp } th dport 53 accept
+		iifname "mgmt0" oifname "out0" ip daddr 203.0.113.10 udp dport 123 accept
+		iifname "out0" oifname "dmz0" ip daddr 172.16.10.10 tcp dport { 80, 443 } accept
+		iifname "dmz0" oifname "out0" ip saddr 172.16.10.10 ip daddr 203.0.113.10 tcp dport { 80, 443 } accept
+		iifname "dmz0" oifname "out0" ip saddr 172.16.10.10 ip daddr 203.0.113.10 udp dport { 53, 123 } accept
+		limit rate 10/second burst 20 packets log prefix "r1-fwd-drop "
+		counter packets 73 bytes 4473 drop
+	}
+
+	chain input {
+		type filter hook input priority filter; policy drop;
+		iif "lo" accept
+		jump antispoof
+		ct state established,related accept
+		ct state invalid counter packets 0 bytes 0 drop
+		iifname "mgmt0" ip saddr 192.168.99.5 tcp dport 22 accept
+		iifname { "in0", "mgmt0" } icmp type echo-request accept
+		limit rate 10/second burst 20 packets log prefix "r1-in-drop "
+		counter packets 6 bytes 360 drop
+	}
+}

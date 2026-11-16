@@ -1,0 +1,50 @@
+flush ruleset
+
+define INTERNET = 203.0.113.10
+define WEB      = 172.16.10.10
+define BASTION  = 192.168.99.5
+
+table inet r1 {
+  chain forward {
+    type filter hook forward priority 0; policy drop;
+
+    ct state established,related accept
+    ct state invalid counter drop
+
+    # same zone = allowed (bridges with several hosts)
+    iifname "in0"   oifname "in0"   accept
+    iifname "mgmt0" oifname "mgmt0" accept
+    iifname "dmz0"  oifname "dmz0"  accept
+    iifname "out0"  oifname "out0"  accept
+
+    # INSIDE -> OUTSIDE: web, DNS only to real resolver, ping
+    iifname "in0" oifname "out0" tcp dport { 80, 443 } accept
+    iifname "in0" oifname "out0" ip daddr $INTERNET meta l4proto { tcp, udp } th dport 53 accept
+    iifname "in0" oifname "out0" icmp type echo-request accept
+
+    # INSIDE -> DMZ: web server only
+    iifname "in0" oifname "dmz0" ip daddr $WEB tcp dport { 80, 443 } accept
+
+    # MGMT -> DMZ: SSH to web only from bastion
+    iifname "mgmt0" oifname "dmz0" ip saddr $BASTION ip daddr $WEB tcp dport 22 accept
+
+    # OUTSIDE -> DMZ: public web only
+    iifname "out0" oifname "dmz0" ip daddr $WEB tcp dport { 80, 443 } accept
+
+    # DMZ -> OUTSIDE: web updates + DNS
+    iifname "dmz0" oifname "out0" ip saddr $WEB tcp dport { 80, 443 } accept
+    iifname "dmz0" oifname "out0" ip saddr $WEB ip daddr $INTERNET udp dport 53 accept
+
+    log prefix "r1-fwd-drop " counter drop
+  }
+
+  chain input {
+    type filter hook input priority 0; policy drop;
+    iif "lo" accept
+    ct state established,related accept
+    ct state invalid counter drop
+    iifname "mgmt0" ip saddr $BASTION tcp dport 22 accept
+    iifname { "in0", "mgmt0" } icmp type echo-request accept
+    log prefix "r1-in-drop " counter drop
+  }
+}

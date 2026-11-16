@@ -1,0 +1,18 @@
+== web -> 203.0.113.66:443 (expect BLOCK)
+nc: connect to 203.0.113.66 port 443 (tcp) timed out: Operation now in progress
+== web -> 203.0.113.10:443 (expect ALLOW)
+Connection to 203.0.113.10 443 port [tcp/https] succeeded!
+== staff -> 203.0.113.10:443 (expect ALLOW)
+Connection to 203.0.113.10 443 port [tcp/https] succeeded!
+== staff -> 172.16.10.10:80 (expect ALLOW)
+Connection to 172.16.10.10 80 port [tcp/http] succeeded!
+== attacker -> 172.16.10.10:80 (expect ALLOW)
+Connection to 172.16.10.10 80 port [tcp/http] succeeded!
+== attacker -> 192.168.10.50:445 (expect BLOCK)
+nc: connect to 192.168.10.50 port 445 (tcp) timed out: Operation now in progress
+== bastion -> 172.16.10.10:22 (expect ALLOW)
+Connection to 172.16.10.10 22 port [tcp/ssh] succeeded!
+== bastion -> 192.168.99.1:22 (expect ALLOW)
+Connection to 192.168.99.1 22 port [tcp/ssh] succeeded!
+== web -> 172.16.20.10:3306 (expect ALLOW)
+Connection to 172.16.20.10 3306 port [tcp/mysql] succeeded!

@@ -1,0 +1,9 @@
+Server:		203.0.113.10
+Address:	203.0.113.10#53
+
+Non-authoritative answer:
+Name:	example.com
+Address: 203.0.113.80
+Name:	example.com
+Address: 203.0.113.80
+
