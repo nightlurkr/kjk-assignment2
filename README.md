@@ -10,13 +10,13 @@ Dosen: Fuad Dary Rosyadi, S.Kom., M.Kom. dan Deka Julian Arrizki, S.Kom., M.Kom.
 
 ## Anggota kelompok
 
-| Nama | NRP |
-|---|---|
-| Ryan Adya Purwanto | 5027231046 |
-| Bayu Kurniawan | 5027241055 |
-| Asfia Fahmisan | 5027251043 |
-| Hendra Manudinata | 5027251051 |
-| Rido Patra Yudhistira Edwin | 5027251120 |
+| Nama | NRP | Bagian yang dikerjakan |
+|---|---|---|
+| Ryan Adya Purwanto | 5027231046 | Laporan dan diagram arsitektur |
+| Bayu Kurniawan | 5027241055 | ... |
+| Asfia Fahmisan | 5027251043 | Konfigurasi VM (rule nftables r1, r2, db) |
+| Hendra Manudinata | 5027251051 | Konfigurasi VM (rule nftables r1, r2, db) |
+| Rido Patra Yudhistira Edwin | 5027251120 | Laporan dan diagram arsitektur |
 
 ---
 
@@ -165,7 +165,7 @@ Hasil recon dicatat ke `bukti/00-recon.txt`. Ini juga jadi bukti kondisi "before
 
 ### Menit 15-20 · Gambar matriks arah
 
-Lima zona menghasilkan **20 pasangan berarah** (5 × 4), jumlah yang sama dengan jumlah item policy. Buat tabel 5 × 5 di kertas, coret diagonalnya, lalu isi 20 kotak sisanya dengan keputusan: `inspect`, `pass`, atau `drop` berlog.
+Lima zona menghasilkan **20 pasangan berarah** (5 × 4). Asumsi kami: jumlah ini sama dengan jumlah item policy (belum dikonfirmasi dosen). Buat tabel 5 × 5 di kertas, coret diagonalnya, lalu isi 20 kotak sisanya dengan keputusan: `inspect`, `pass`, atau `drop` berlog.
 
 Kotak yang tidak diisi berarti poin yang hilang.
 
@@ -219,6 +219,10 @@ table inet r1 {
     iifname "in0"   ip saddr != 192.168.10.0/24 counter drop
     iifname "mgmt0" ip saddr != 192.168.99.0/24 counter drop
     iifname "dmz0"  ip saddr != { 172.16.10.0/24, 172.16.20.0/24 } counter drop
+    # paket TCP dengan flag tidak sah (NULL scan, SYN+FIN, SYN+RST)
+    tcp flags & (fin|syn|rst|psh|ack|urg) == 0x0 counter drop
+    tcp flags & (fin|syn) == (fin|syn) counter drop
+    tcp flags & (syn|rst) == (syn|rst) counter drop
   }
 
   chain forward {
@@ -301,7 +305,8 @@ table inet r2 {
     iifname "mgmt0" oifname "data0" ip saddr $BASTION ip daddr $DB tcp dport 22 accept
     iifname "mgmt0" oifname "data0" icmp type echo-request accept
 
-    log prefix "r2-fwd-drop " counter drop
+    limit rate 10/second burst 20 packets log prefix "r2-fwd-drop "
+    counter drop
   }
 
   chain input {
@@ -311,7 +316,8 @@ table inet r2 {
     ct state invalid counter drop
     iifname "mgmt0" ip saddr $BASTION tcp dport 22 accept
     iifname "mgmt0" icmp type echo-request accept
-    log prefix "r2-in-drop " counter drop
+    limit rate 10/second burst 20 packets log prefix "r2-in-drop "
+    counter drop
   }
 }
 ```
@@ -334,10 +340,17 @@ table inet db {
     ip saddr 192.168.99.0/24 icmp type echo-request accept
     log prefix "db-in-drop " counter drop
   }
+
+  chain output {
+    type filter hook output priority 0; policy drop;
+    oif "lo" accept
+    ct state established,related accept
+    log prefix "db-out-drop " counter drop
+  }
 }
 ```
 
-Ini lapis kedua. Kalau r2 jebol, database masih menolak siapa pun selain web server dan bastion.
+Ini lapis kedua. Kalau r2 jebol, database masih menolak siapa pun selain web server dan bastion. Chain `output` membuat db sendiri juga tidak bisa memulai koneksi (misalnya reverse shell), terlepas dari r2.
 
 ---
 
@@ -354,7 +367,9 @@ Ini lapis kedua. Kalau r2 jebol, database masih menolak siapa pun selain web ser
 | Akses admin hanya lewat bastion | Pola jump host. Satu pintu yang diawasi, bukan banyak pintu. |
 | Firewall host di db | Defense in depth. Dua lapis harus jebol sebelum database tersentuh. |
 | `log prefix` + `counter` di tiap penutup | Tanpa ini, drop tidak bisa dibuktikan. 30% nilai ada di pembuktian. |
-| `limit rate` pada log di r1 | Mencegah log membanjiri disk saat ada flood. |
+| `limit rate` pada log di r1 dan r2 | Mencegah log membanjiri disk saat ada flood. |
+| Buang flag TCP tidak sah di r1 | NULL scan, SYN+FIN, dan SYN+RST dipakai untuk scanning dan fingerprinting. |
+| OUTSIDE paling kiri, INSIDE di sisi dalam | Di diagram, zona diurutkan menurut tingkat kepercayaan. INSIDE dan OUTSIDE tidak pernah berada di sisi yang sama dari firewall. |
 
 ---
 
@@ -373,7 +388,7 @@ Counter muncul sebagai `counter packets N bytes M` di baris drop. Urutannya: jal
 ### Melihat log drop
 
 ```bash
-journalctl -k | grep -E 'r1-fwd-drop|r1-in-drop|r2-fwd-drop|r2-in-drop|db-in-drop'
+sudo grep -E '(r1|r2|db)-[a-z]+-drop' /var/log/kern.log | tail -50
 ```
 
 ### Probe positif, yang seharusnya berhasil
@@ -399,8 +414,10 @@ sudo lab web      nc -zv -w 2 203.0.113.66 4444   # kanal C2 dari DMZ ke attacke
 
 | | Serangan | Yang dikirim | Hasil |
 |---|---|---|---|
-| A | Akses langsung ke database dari internet | `sudo lab attacker nc -zv -w 2 172.16.20.10 3306` | Gagal. `r2-fwd-drop` naik, dan `db-in-drop` juga naik. Dua lapis menahan. |
-| B | Spoofing alamat privat dari internet | paket dengan source 192.168.10.x masuk lewat `out0` | Gagal di chain `antispoof` r1, counter bogon naik. |
+| A | Attacker memindai SMB milik staff | `sudo lab attacker nc -zv -w 2 192.168.10.50 445` | Sebelum: `Connection to 192.168.10.50 445 port [tcp/microsoft-ds] succeeded!`. Sesudah: `timed out`. Ditahan `r1-fwd-drop` (OUTSIDE → INSIDE tidak punya rule). Bukti: `bukti/atk1-before.txt`, `bukti/atk1-after.txt`. |
+| B | Web yang diretas membuka reverse shell ke attacker | `sudo lab web nc -zv -w 2 203.0.113.66 4444` | Sebelum: `Connection to 203.0.113.66 4444 port [tcp/*] succeeded!`. Sesudah: `timed out`. Ditahan `r1-fwd-drop` (DMZ hanya boleh ke 203.0.113.10). Bukti: `bukti/atk2-before.txt`, `bukti/atk2-after.txt`. |
+
+Uji tambahan: attacker ke database (`attacker → 172.16.20.10:3306`) sudah ditahan di **r1**, karena r1 hanya meneruskan OUTSIDE → DMZ ke `$WEB`. Paketnya tidak pernah sampai ke r2 maupun db, sehingga `db-in-drop` tetap 0. DNS ke resolver palsu attacker (`nslookup example.com 203.0.113.66`) juga gagal (`bukti/atk3-dns-rogue.txt`).
 
 ---
 
@@ -415,9 +432,11 @@ Yang **tidak** dilakukan:
 - Tidak ada runtime baru yang dipasang.
 - Lab guard tidak dihapus atau diubah.
 - Service Teleport tidak dihentikan maupun diubah.
-- Skrip penilai dan file sementara Ansible dosen tidak dicari, dibuka, maupun diubah.
+- Skrip penilai dan file sementara Ansible dosen tidak diubah.
 
-Daftar 20 item policy memang dirahasiakan dosen. Policy yang kami terapkan di atas adalah **hasil penalaran sendiri** dari `zone-services.json`, topologi lab, dan prinsip pada materi Week 9 dan Week 11, bukan salinan kunci jawaban.
+Daftar 20 item policy memang dirahasiakan dosen. Policy awal (v1 sampai v4) adalah **hasil penalaran sendiri** dari `zone-services.json`, topologi lab, dan prinsip pada materi Week 9 dan Week 11.
+
+Setelah itu, **dengan izin dosen**, kami membaca log drop kernel (`/var/log/kern.log`) dari saat `lab-test` berjalan, serta skrip lab `/usr/local/sbin/zone-lab` dan `/usr/local/lib/zone-lab/zone-serve`, untuk memeriksa apakah ada trafik sah yang ikut ter-drop. Petunjuk lisan dosen ("jaringan luar diberi rate limit, jaringan dalam tidak") juga kami pakai.
 
 ---
 

@@ -16,7 +16,8 @@ table inet r2 {
     iifname "mgmt0" oifname "data0" ip saddr $BASTION ip daddr $DB tcp dport 22 accept
     iifname "mgmt0" oifname "data0" icmp type echo-request accept
 
-    log prefix "r2-fwd-drop " counter drop
+    limit rate 10/second burst 20 packets log prefix "r2-fwd-drop "
+    counter drop
   }
 
   chain input {
@@ -26,6 +27,7 @@ table inet r2 {
     ct state invalid counter drop
     iifname "mgmt0" ip saddr $BASTION tcp dport 22 accept
     iifname "mgmt0" icmp type echo-request accept
-    log prefix "r2-in-drop " counter drop
+    limit rate 10/second burst 20 packets log prefix "r2-in-drop "
+    counter drop
   }
 }

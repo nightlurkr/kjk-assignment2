@@ -11,4 +11,11 @@ table inet db {
     ip saddr 192.168.99.0/24 icmp type echo-request accept
     log prefix "db-in-drop " counter drop
   }
+
+  chain output {
+    type filter hook output priority 0; policy drop;
+    oif "lo" accept
+    ct state established,related accept
+    log prefix "db-out-drop " counter drop
+  }
 }
